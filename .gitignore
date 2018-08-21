@@ -1,2 +1,7 @@
 # emacs tmp
 *~
+
+#python binary
+
+__pycache__
+*.pyc
