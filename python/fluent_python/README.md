@@ -105,3 +105,58 @@ a_list = MyList(range(10))
 wref_to_a_list = weakref.ref(a_list)
 
 ```
+
+### chapter9 A Pythonic Object
+
+#### Object Representations
+
+__repr__ , __str__ , __bytes__ and __format__ .
+
+#### classmethod Versus staticmethod
+
+- classmethod: to define a method that operates on the class and not on instances. classmethod changes the way the method is called, so it receives the class itself as the first argument, instead of an instance. Its most common use is for alternative constructors
+- staticmethod: In essence, a static method is just like a plain function that happens to live in a class body, instead of being defined at the module level.
+
+#### Formatted Displays
+
+The Format Specification Mini-Language is extensible because each class gets to inter‐
+pret the format_spec argument as it likes. For instance, the classes in the datetime
+module use the same format codes in the strftime() functions and in their __for
+mat__ methods.
+
+```python
+
+from datetime import datetime
+now = datetime.now()
+format(now, '%H:%M:%S')
+"It's now {:%I:%M %p}".format(now)
+
+```
+
+#### A Hashable Vector2d
+
+1. implement __hash__ ( __eq__ is also required)
+2. make vector instances immutable
+
+#### Saving Space with the __slots__ Class Attribute
+
+If you are dealing with millions of instances with few attributes, the
+__slots__ class attribute can save a lot of memory, by letting the interpreter store the
+instance attributes in a tuple instead of a dict .
+
+#### The Problems with __slots__
+
+- You must remember to redeclare __slots__ in each subclass, because the inherited attribute is ignored by the interpreter.
+- Instances will only be able to have the attributes listed in __slots__ , unless you include '__dict__' in __slots__ (but doing so may negate the memory savings).
+- Instances cannot be targets of weak references unless you remember to include '__weakref__' in __slots__ .
+
+#### Overriding Class Attributes
+
+```python
+
+from vector2d_v3 import Vector2d
+
+class ShortVector2d(Vector2d):
+	typecode = 'f'
+
+```
